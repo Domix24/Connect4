@@ -10,7 +10,6 @@
     tools:context="com.band.guy.kool.connect4.MainMenu"
     android:background="@drawable/background">
 
-
     <ImageButton
         android:layout_width="200dp"
         android:layout_height="117dp"

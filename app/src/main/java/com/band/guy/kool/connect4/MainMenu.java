@@ -13,12 +13,13 @@ public class MainMenu extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+
     }
 
     public void OnClick(View v){
         if(v.getId() == R.id.btnLocal)
         {
-            Intent intent = new Intent(this,Jeu.class);
+            Intent intent = new Intent(this,Puissance4.class);
             startActivity(intent);
         }
         else if(v.getId() == R.id.btnHote)

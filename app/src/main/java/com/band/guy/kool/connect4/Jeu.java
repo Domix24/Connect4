@@ -1,9 +1,8 @@
-/*
+package com.band.guy.kool.connect4;/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tp2.puissance4;
 
 /**
  *
@@ -46,12 +45,12 @@ public class Jeu implements ActionsPuissance4 {
     }
 
     @Override
-    public void jouer(int colonne) {
+    public int jouer(int colonne) {
 
         int ligne = 0;
 
         if (this.avoirJoueur(0, colonne) != Joueur.Aucun) {
-            return;
+            return -1;
         }
 
         for (int i = 1; i < this.nombreLignes; i++) {
@@ -72,6 +71,7 @@ public class Jeu implements ActionsPuissance4 {
             joueurActif = joueurActif == Joueur.Noir ? Joueur.Blanc : Joueur.Noir;
             this.évènementsJeu.auTourDe(joueurActif);
         }
+        return  ligne;
     }
 
     private boolean vérifierVictoire(int colonne, int ligne) {

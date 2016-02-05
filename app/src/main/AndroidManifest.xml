@@ -11,7 +11,7 @@ package="com.band.guy.kool.connect4">
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
 </activity>
-    <activity android:name=".Jeu" android:screenOrientation="landscape"
+    <activity android:name=".Puissance4" android:screenOrientation="landscape"
         android:configChanges="keyboardHidden|orientation|screenSize">
     </activity>
 </application>
