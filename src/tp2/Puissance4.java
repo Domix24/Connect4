@@ -5,29 +5,33 @@
  */
 package tp2;
 
-import tp2.puissance4.Jeu;
 import tp2.puissance4.Joueur;
-import java.io.IOException;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import tp2.puissance4.ActionsPuissance4;
-import tp2.puissance4.ÉvènementsPuissance4;
+import tp2.puissance4.GestionnaireJoueurs;
+import tp2.puissance4.IActionsPuissance4;
+import tp2.puissance4.IÉvènementsPuissance4;
+import tp2.puissance4.JeuGravité;
 
 /**
  *
  * @author Dominic
  */
-public class Puissance4 implements ÉvènementsPuissance4 {
+public class Puissance4 implements IÉvènementsPuissance4 {
 
     boolean partieTerminée;
-    ActionsPuissance4 actionsJeu;
+    IActionsPuissance4 actionsJeu;
 
-    public final int NOMBRE_LIGNES = 100;
-    public final int NOMBRE_COLONNES = 200;
+    public final int NOMBRE_LIGNES = 6;
+    public final int NOMBRE_COLONNES = 7;
 
-    private Puissance4() {
-        actionsJeu = new Jeu(this, Joueur.Noir, NOMBRE_LIGNES, NOMBRE_COLONNES);
+    private Puissance4() {   
+        GestionnaireJoueurs.avoirInstance().ajouterJoueur("Rouge", 'r');
+        GestionnaireJoueurs.avoirInstance().ajouterOrdinateur("Bleu", 'b');
+        
+        GestionnaireJoueurs.avoirInstance().changerJoueurActif('r');
+        
+        actionsJeu = new JeuGravité(this, NOMBRE_LIGNES, NOMBRE_COLONNES);
+        
         partieTerminée = false;
     }
 
@@ -42,24 +46,22 @@ public class Puissance4 implements ÉvènementsPuissance4 {
         puissance4.afficherGrille();
     }
 
-    private void afficherGrille()
-    {
+    private void afficherGrille() {
         Joueur joueur;
         String contenu;
         
         for(int i  = 0; i < this.NOMBRE_LIGNES; i++) {
-            System.out.print("| ");
+            System.out.print("|");
             for(int j = 0; j < this.NOMBRE_COLONNES; j++) {
                 joueur = actionsJeu.avoirJoueur(i,j);
-                contenu = "" + this.avoirJoueurCourt(joueur);
-                System.out.print(contenu + " | ");
+                contenu = ""+ (joueur == null ? "-" : joueur.avoirNomCourt());
+                System.out.print(" "+contenu + " |");
             }
             System.out.println();
         }
     }
     
-    private int lireChoixColonne()
-    {
+    private int lireChoixColonne() {
         int choix = 0;
         
         do
@@ -68,20 +70,21 @@ public class Puissance4 implements ÉvènementsPuissance4 {
                 Scanner clavier = new Scanner(System.in);
                 System.out.print("Entrez un chiffre, puis ENTER pour jouer: ");
                 choix = clavier.nextInt();
-            } catch (Exception exception) { }
-        } while(choix < 1 || choix > NOMBRE_COLONNES + 1);
+            } catch (Exception exception) {
+                System.err.println(exception.getMessage());
+            }
+        } while(choix < 1 || choix > NOMBRE_COLONNES);
         
         return choix;
     }
     
-    private void jouerColonne(int colonne)
-    {
+    private void jouerColonne(int colonne) {
         actionsJeu.jouer(colonne - 1);
     }
 
     @Override
     public void aGagné(Joueur joueur) {
-        System.out.println("Le joueur " + transformerJoueurEnTexte(joueur) + " a gagné.");
+        System.out.println(joueur + " a gagné.");
         this.partieTerminée = true;
     }
 
@@ -93,25 +96,11 @@ public class Puissance4 implements ÉvènementsPuissance4 {
 
     @Override
     public void auTourDe(Joueur joueur) {
-        System.out.println("C'est au tour du joueur " + transformerJoueurEnTexte(joueur));
+        System.out.println("C'est au tour de: " + joueur);
     }
 
     @Override
     public void positionDéjàOccupée(int ligne, int colonne) {
         System.out.println("La position " + ligne + ", " + colonne + " est déjà occupée");
     }
-
-    private String transformerJoueurEnTexte(Joueur joueur) {        
-        return joueur == Joueur.Noir ? "Noir" : "Blanc";
-    }
-    
-    private String avoirJoueurCourt(Joueur joueur) {
-        if(joueur == Joueur.Aucun)
-            return "-";
-        else if(joueur == Joueur.Blanc)
-            return "B";
-        
-        return "N";
-    }
-
 }

@@ -9,6 +9,35 @@ package tp2.puissance4;
  *
  * @author Dominic
  */
-public enum Joueur {
-    Blanc, Noir, Aucun
+public class Joueur {
+
+    private final String nom;
+    private final char nomCourt;
+    private final boolean estIA;
+    
+    public static final Joueur VIDE = new Joueur("VIDE", '-', false);
+
+    public Joueur(String nom, char nomCourt, boolean estIA) {
+        this.nom = nom;
+        this.nomCourt = nomCourt;
+        this.estIA = estIA;
+    }
+
+    public char avoirNomCourt() {
+        return this.nomCourt;
+    }
+
+    public String avoirNom() {
+        return this.nom;
+    }
+    
+    public boolean avoirEstIA() {
+        return this.estIA;
+    }
+
+    @Override
+    public String toString() {
+        return "(" + this.nomCourt + ") " + this.nom;
+    }
+
 }
