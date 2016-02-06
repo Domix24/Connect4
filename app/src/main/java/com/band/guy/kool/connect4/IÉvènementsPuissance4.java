@@ -9,9 +9,9 @@ package com.band.guy.kool.connect4;/*
  *
  * @author Dominic
  */
-public interface ÉvènementsPuissance4 {
-    public void aGagné(Joueur joueur);
-    public void grillePleine();
-    public void auTourDe(Joueur joueur);
-    public void positionDéjàOccupée(int ligne, int colonne);
+public interface IÉvènementsPuissance4 {
+    public String aGagné(Joueur joueur);
+    public String grillePleine();
+    public String auTourDe(Joueur joueur);
+    public String positionDéjàOccupée(int ligne, int colonne);
 }

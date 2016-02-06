@@ -31,207 +31,57 @@ import java.util.Scanner;
  *
  * @author Dominic
  */
-public class Puissance4 extends Activity implements ÉvènementsPuissance4 {
-    TextView grille;
-    Puissance4 puissance4;
-    private Integer[] mThumbIds = {
-            R.drawable.gris,
-            R.drawable.gris,
-            R.drawable.gris,
-            R.drawable.gris,
-            R.drawable.gris,
-            R.drawable.gris,
-            R.drawable.gris,
-            R.drawable.gris,
-            R.drawable.gris,
-            R.drawable.gris,
-            R.drawable.gris,
-            R.drawable.gris,
-            R.drawable.gris,
-            R.drawable.gris,
-            R.drawable.gris,
-            R.drawable.gris,
-            R.drawable.gris,
-            R.drawable.gris,
-            R.drawable.gris,
-            R.drawable.gris,
-            R.drawable.gris,
-            R.drawable.gris,
-            R.drawable.gris,
-            R.drawable.gris,
-            R.drawable.gris,
-            R.drawable.gris,
-            R.drawable.gris,
-            R.drawable.gris,
-            R.drawable.gris,
-            R.drawable.gris,
-            R.drawable.gris,
-            R.drawable.gris,
-            R.drawable.gris,
-            R.drawable.gris,
-            R.drawable.gris,
-            R.drawable.gris,
-            R.drawable.gris,
-            R.drawable.gris,
-            R.drawable.gris,
-            R.drawable.gris,
-            R.drawable.gris,
-            R.drawable.gris,
-
-    };
-
-
-    /**
-     * Called when the activity is first created.
-     */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_jeu);
-
-        GridView gridview = (GridView) findViewById(R.id.gridFriends);
-        gridview.setAdapter(new MonAdapteur(this));
-        gridview.setNumColumns(NOMBRE_COLONNES);
-                puissance4 = new Puissance4();
-    }
+public class Puissance4 implements IÉvènementsPuissance4 {
 
     boolean partieTerminée;
-    ActionsPuissance4 actionsJeu;
+    IActionsPuissance4 actionsJeu;
 
     public final int NOMBRE_LIGNES = 6;
     public final int NOMBRE_COLONNES = 7;
 
     public Puissance4() {
-        actionsJeu = new Jeu(this, Joueur.Noir, NOMBRE_LIGNES, NOMBRE_COLONNES);
+        GestionnaireJoueurs.avoirInstance().ajouterJoueur("Rouge", 'r');
+        GestionnaireJoueurs.avoirInstance().ajouterJoueur("Bleu", 'b');
+
+        GestionnaireJoueurs.avoirInstance().changerJoueurActif('r');
+
+        actionsJeu = new JeuGravité(this, NOMBRE_LIGNES, NOMBRE_COLONNES);
+
         partieTerminée = false;
     }
 
 
 
-    private String afficherGrille()
-    {
-        Joueur joueur;
-        String contenu = "";
-        
-        for(int i  = 0; i < this.NOMBRE_LIGNES; i++) {
-            contenu += ("| ");
-            for(int j = 0; j < this.NOMBRE_COLONNES; j++) {
-                joueur = actionsJeu.avoirJoueur(i,j);
-
-                contenu += "" + this.avoirJoueurCourt(joueur) + (" | ");
-            }
-            contenu +=("\n");
 
 
-        }
-        return contenu;
-    }
-    
-    public void lireChoixColonne(View v)
-    {
-        int colonne = (int)v.getTag()%7;
+    public int lireChoixColonne(View v) {
+        int colonne =  ((int)v.getTag()/7);
         int ligne = actionsJeu.jouer(colonne);
-        if(joueurCourrant == Joueur.Blanc)
-        {
-            mThumbIds[(colonne+ligne*7)] = R.drawable.bleu2;
-        }
-        else if(joueurCourrant == Joueur.Noir)
-        {
-            mThumbIds[(colonne+7*ligne)] = R.drawable.rouge2;
-        }
-        GridView gv = (GridView)findViewById(R.id.gridFriends);
-        System.out.println(v.getTag());
-        MonAdapteur adapteur = new MonAdapteur(this);
-        adapteur.notifyDataSetChanged();
-        gv.setAdapter(adapteur);
-
-
+        return ligne*7+colonne;
     }
 
-
-
-
-    private int jouerColonne(int colonne)
-    {
-        return actionsJeu.jouer(colonne);
-
-    }
 
     @Override
-    public void aGagné(Joueur joueur) {
-        System.out.println("Le joueur " + transformerJoueurEnTexte(joueur) + " a gagné.");
+    public String aGagné(Joueur joueur) {
         this.partieTerminée = true;
+       return ""+ joueur + " a gagné.";
+
     }
 
     @Override
-    public void grillePleine() {
-        System.out.println("La partie est terminée.");
+    public String grillePleine() {
         this.partieTerminée = true;
-    }
-    private Joueur joueurCourrant;
-    @Override
-    public void auTourDe(Joueur joueur) {
-        System.out.println("C'est au tour du joueur " + transformerJoueurEnTexte(joueur));
-        joueurCourrant = joueur;
+        return "La partie est terminée.";
+
     }
 
     @Override
-    public void positionDéjàOccupée(int ligne, int colonne) {
-        System.out.println("La position " + ligne + ", " + colonne + " est déjà occupée");
+    public String auTourDe(Joueur joueur) {
+        return "C'est au tour de: " + joueur;
     }
 
-    private String transformerJoueurEnTexte(Joueur joueur) {        
-        return joueur == Joueur.Noir ? "Noir" : "Blanc";
-    }
-    
-    private String avoirJoueurCourt(Joueur joueur) {
-        if(joueur == Joueur.Aucun)
-            return "-";
-        else if(joueur == Joueur.Blanc)
-            return "B";
-        
-        return "N";
-    }
-    public class MonAdapteur extends BaseAdapter {
-        private Context mContext;
-
-        public MonAdapteur(Context c) {
-            mContext = c;
-        }
-
-        @Override
-        public int getCount() {
-            return mThumbIds.length;
-        }
-
-        @Override
-        public Object getItem(int arg0) {
-            return mThumbIds[arg0];
-        }
-
-        @Override
-        public long getItemId(int arg0) {
-            return arg0;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-            View grid;
-
-            if (convertView == null) {
-                grid = new View(mContext);
-                LayoutInflater inflater = getLayoutInflater();
-                grid = inflater.inflate(R.layout.grid_items, parent, false);
-            } else {
-                grid = (View) convertView;
-            }
-
-            ImageButton imagebtn = (ImageButton) grid.findViewById(R.id.imgbtnCase);
-            imagebtn.setImageResource(mThumbIds[position]);
-            imagebtn.setTag(Integer.valueOf(position));
-
-            return grid;
-        }
+    @Override
+    public String positionDéjàOccupée(int ligne, int colonne) {
+        return "La position " + ligne + ", " + colonne + " est déjà occupée";
     }
 }
