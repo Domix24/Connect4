@@ -25,14 +25,4 @@
         android:stretchMode="columnWidth">
     </GridView>
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/imageView"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true"
-        android:src="@drawable/grille"
-        android:scaleType="fitXY"
-        />
-
 </RelativeLayout>

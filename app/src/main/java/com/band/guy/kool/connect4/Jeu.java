@@ -33,7 +33,7 @@ public abstract class Jeu implements IActionsPuissance4 {
             }
         }
 
-        this.évènementsJeu.auTourDe(GestionnaireJoueurs.avoirInstance().avoirJoueurActif());
+        this.évènementsJeu.auTourDe();
     }
 
     @Override

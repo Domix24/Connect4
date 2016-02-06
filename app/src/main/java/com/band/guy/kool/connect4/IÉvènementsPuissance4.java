@@ -10,8 +10,8 @@ package com.band.guy.kool.connect4;/*
  * @author Dominic
  */
 public interface IÉvènementsPuissance4 {
-    public String aGagné(Joueur joueur);
+    public String aGagné();
     public String grillePleine();
-    public String auTourDe(Joueur joueur);
-    public String positionDéjàOccupée(int ligne, int colonne);
+    public String auTourDe();
+    public String positionDéjàOccupée();
 }

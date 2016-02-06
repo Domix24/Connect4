@@ -35,6 +35,7 @@ public class Puissance4 implements IÉvènementsPuissance4 {
 
     boolean partieTerminée;
     IActionsPuissance4 actionsJeu;
+    public boolean aGagne;
 
     public final int NOMBRE_LIGNES = 6;
     public final int NOMBRE_COLONNES = 7;
@@ -48,6 +49,7 @@ public class Puissance4 implements IÉvènementsPuissance4 {
         actionsJeu = new JeuGravité(this, NOMBRE_LIGNES, NOMBRE_COLONNES);
 
         partieTerminée = false;
+        aGagne = false;
     }
 
 
@@ -55,15 +57,20 @@ public class Puissance4 implements IÉvènementsPuissance4 {
 
 
     public int lireChoixColonne(View v) {
-        int colonne =  ((int)v.getTag()/7);
+        int colonne =  ((int)v.getTag()%7);
         int ligne = actionsJeu.jouer(colonne);
+        if(ligne < 0)
+            return ligne;
         return ligne*7+colonne;
     }
 
 
+
     @Override
-    public String aGagné(Joueur joueur) {
+    public String aGagné() {
         this.partieTerminée = true;
+        this.aGagne = true;
+       Joueur joueur = GestionnaireJoueurs.avoirInstance().avoirJoueurActif();
        return ""+ joueur + " a gagné.";
 
     }
@@ -76,12 +83,13 @@ public class Puissance4 implements IÉvènementsPuissance4 {
     }
 
     @Override
-    public String auTourDe(Joueur joueur) {
+    public String auTourDe() {
+        Joueur joueur = GestionnaireJoueurs.avoirInstance().avoirJoueurActif();
         return "C'est au tour de: " + joueur;
     }
 
     @Override
-    public String positionDéjàOccupée(int ligne, int colonne) {
-        return "La position " + ligne + ", " + colonne + " est déjà occupée";
+    public String positionDéjàOccupée() {
+        return "La position est déjà occupée";
     }
 }

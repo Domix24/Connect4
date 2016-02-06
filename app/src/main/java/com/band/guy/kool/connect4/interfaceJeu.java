@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 /**
  * Created by Michael on 2/5/2016.
@@ -79,25 +80,34 @@ public class interfaceJeu extends Activity {
 
     public void jouer(View v)
     {
-        int position = puissance4.lireChoixColonne(v);
-        if(position == -1)
-        {
-            return;
-        }
-        if(GestionnaireJoueurs.avoirInstance().avoirJoueurActif() == GestionnaireJoueurs.avoirInstance().avoirJoueurAvecNomCourt('N'))
-        {
-            mThumbIds[position] = R.drawable.bleu;
-        }
-        else if(GestionnaireJoueurs.avoirInstance().avoirJoueurActif() == GestionnaireJoueurs.avoirInstance().avoirJoueurAvecNomCourt('B'))
-        {
-            mThumbIds[position] = R.drawable.rouge;
-        }
+        if(!puissance4.partieTerminée) {
+            int position = puissance4.lireChoixColonne(v);
+            if (position < 0) {
+                String texte = puissance4.positionDéjàOccupée();
 
-        GridView gv = (GridView)findViewById(R.id.gridFriends);
-        System.out.println(v.getTag());
-        MonAdaptateur adapteur = new MonAdaptateur(this);
-        adapteur.notifyDataSetChanged();
-        gv.setAdapter(adapteur);
+                Toast.makeText(this, texte, Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (GestionnaireJoueurs.avoirInstance().avoirJoueurActif() == GestionnaireJoueurs.avoirInstance().avoirJoueurAvecNomCourt('b')) {
+                mThumbIds[position] = R.drawable.bleu;
+            } else if (GestionnaireJoueurs.avoirInstance().avoirJoueurActif() == GestionnaireJoueurs.avoirInstance().avoirJoueurAvecNomCourt('r')) {
+                mThumbIds[position] = R.drawable.rouge;
+            }
+
+            GridView gv = (GridView) findViewById(R.id.gridFriends);
+            System.out.println(v.getTag());
+            MonAdaptateur adapteur = new MonAdaptateur(this);
+            adapteur.notifyDataSetChanged();
+            gv.setAdapter(adapteur);
+
+            if (puissance4.partieTerminée) {
+                if (puissance4.aGagne) {
+                    Toast.makeText(this, puissance4.aGagné(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, puissance4.grillePleine(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
     }
 
         public class MonAdaptateur extends BaseAdapter {

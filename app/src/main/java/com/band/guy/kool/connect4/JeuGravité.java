@@ -15,12 +15,14 @@ import android.graphics.Point;
 public class JeuGravité extends Jeu implements IActionsPuissance4 {
     
     IntelligenceArtificielle ia;
+
     
     public JeuGravité(IÉvènementsPuissance4 évènementsJeu, int nombreLignes, int nombreColonnes) {
         super(évènementsJeu, nombreLignes, nombreColonnes);
         
         
         ia = new IntelligenceArtificielle(nombreColonnes,nombreLignes);
+
     }
 
     @Override
@@ -28,7 +30,6 @@ public class JeuGravité extends Jeu implements IActionsPuissance4 {
         int ligne = 0;
         
         if(this.avoirJoueur(ligne, colonne) != null) {
-            this.évènementsJeu.positionDéjàOccupée(ligne, colonne);
             return -1;
         }
         
@@ -40,10 +41,13 @@ public class JeuGravité extends Jeu implements IActionsPuissance4 {
         this.nombreEssais++;
         
         if(this.estGagnant(ligne, colonne)) {
-            this.évènementsJeu.aGagné(GestionnaireJoueurs.avoirInstance().avoirJoueurActif());
+            GestionnaireJoueurs.avoirInstance().prochainJoueur();
+            this.évènementsJeu.aGagné();
+
         }
         else if(this.estPartieNulle()) {
             this.évènementsJeu.grillePleine();
+
         }
         else {
             Joueur dernierJoueur = GestionnaireJoueurs.avoirInstance().avoirJoueurActif();
@@ -55,8 +59,8 @@ public class JeuGravité extends Jeu implements IActionsPuissance4 {
                 return jouer(position.y);
 
             }
-            
-            this.évènementsJeu.auTourDe(GestionnaireJoueurs.avoirInstance().avoirJoueurActif());
+
+            this.évènementsJeu.auTourDe();
         }
         return  ligne;
     }

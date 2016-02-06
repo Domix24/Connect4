@@ -19,7 +19,7 @@ public class MainMenu extends Activity {
     public void OnClick(View v){
         if(v.getId() == R.id.btnLocal)
         {
-            Intent intent = new Intent(this,Puissance4.class);
+            Intent intent = new Intent(this,interfaceJeu.class);
             startActivity(intent);
         }
         else if(v.getId() == R.id.btnHote)
