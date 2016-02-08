@@ -57,6 +57,7 @@ public class Puissance4 implements IÉvènementsPuissance4 {
         {
             GestionnaireJoueurs.avoirInstance().ajouterJoueur("Bleu", 'r');
             GestionnaireJoueurs.avoirInstance().ajouterJoueur("Rouge", 'b');
+            actionsJeu = new JeuAntiGravité(this, NOMBRE_LIGNES, NOMBRE_COLONNES);
 
         }
 
