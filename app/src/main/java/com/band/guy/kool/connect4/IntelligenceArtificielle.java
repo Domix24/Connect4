@@ -100,7 +100,6 @@ public class IntelligenceArtificielle {
 
                 if (compteur == 3) {
                     if (cases[j - 1][i] == Joueur.VIDE.avoirNomCourt() && j != 0) {
-                        //cases[j - 1][i] = GestionnaireJoueurs.avoirInstance().avoirJoueurActif().avoirNomCourt();
                         aJoué = true;
                         return new Point(j - 1, i);
                     }

@@ -40,21 +40,37 @@ public class Puissance4 implements IÉvènementsPuissance4 {
     public final int NOMBRE_LIGNES = 6;
     public final int NOMBRE_COLONNES = 7;
 
-    public Puissance4() {
-        GestionnaireJoueurs.avoirInstance().ajouterJoueur("Rouge", 'r');
-        GestionnaireJoueurs.avoirInstance().ajouterJoueur("Bleu", 'b');
+    public Puissance4(String modeJeu) {
+        GestionnaireJoueurs.avoirInstance().viderListe();
+        if(modeJeu.contains("normal")) {
+            GestionnaireJoueurs.avoirInstance().ajouterJoueur("Bleu", 'r');
+            GestionnaireJoueurs.avoirInstance().ajouterJoueur("Rouge", 'b');
+            actionsJeu = new JeuGravité(this, NOMBRE_LIGNES, NOMBRE_COLONNES);
+        }
+        else if(modeJeu.contains("vsAI"))
+        {
+            GestionnaireJoueurs.avoirInstance().ajouterJoueur("Bleu", 'r');
+            GestionnaireJoueurs.avoirInstance().ajouterOrdinateur("Rouge", 'b');
+            actionsJeu = new JeuGravité(this, NOMBRE_LIGNES, NOMBRE_COLONNES);
+        }
+        else if(modeJeu.contains("antiGravite"))
+        {
+            GestionnaireJoueurs.avoirInstance().ajouterJoueur("Bleu", 'r');
+            GestionnaireJoueurs.avoirInstance().ajouterJoueur("Rouge", 'b');
+
+        }
+
 
         GestionnaireJoueurs.avoirInstance().changerJoueurActif('r');
-
-        actionsJeu = new JeuGravité(this, NOMBRE_LIGNES, NOMBRE_COLONNES);
-
         partieTerminée = false;
         aGagne = false;
     }
 
 
 
-
+    public int jouerIA(){
+        return actionsJeu.jouerIA();
+    }
 
     public int lireChoixColonne(View v) {
         int colonne =  ((int)v.getTag()%7);

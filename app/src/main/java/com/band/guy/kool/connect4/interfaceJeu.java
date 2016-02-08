@@ -73,24 +73,27 @@ public class interfaceJeu extends Activity {
         GridView gridview = (GridView) findViewById(R.id.gridFriends);
         gridview.setAdapter(new MonAdaptateur(this));
         gridview.setNumColumns(7);
-
-        puissance4 = new Puissance4();
+        Bundle bundle = getIntent().getExtras();
+        String modeJeu = bundle.getString("modeJeu");
+        puissance4 = new Puissance4(modeJeu);
 
     }
 
     public void jouer(View v)
     {
         if(!puissance4.partieTerminée) {
+
             int position = puissance4.lireChoixColonne(v);
+
             if (position < 0) {
                 String texte = puissance4.positionDéjàOccupée();
 
                 Toast.makeText(this, texte, Toast.LENGTH_SHORT).show();
                 return;
             }
-            if (GestionnaireJoueurs.avoirInstance().avoirJoueurActif() == GestionnaireJoueurs.avoirInstance().avoirJoueurAvecNomCourt('b')) {
+            if (GestionnaireJoueurs.avoirInstance().avoirJoueurActif() == GestionnaireJoueurs.avoirInstance().avoirJoueurAvecNomCourt('r')) {
                 mThumbIds[position] = R.drawable.bleu;
-            } else if (GestionnaireJoueurs.avoirInstance().avoirJoueurActif() == GestionnaireJoueurs.avoirInstance().avoirJoueurAvecNomCourt('r')) {
+            } else if (GestionnaireJoueurs.avoirInstance().avoirJoueurActif() == GestionnaireJoueurs.avoirInstance().avoirJoueurAvecNomCourt('b')) {
                 mThumbIds[position] = R.drawable.rouge;
             }
 
@@ -100,11 +103,33 @@ public class interfaceJeu extends Activity {
             adapteur.notifyDataSetChanged();
             gv.setAdapter(adapteur);
 
+
             if (puissance4.partieTerminée) {
                 if (puissance4.aGagne) {
                     Toast.makeText(this, puissance4.aGagné(), Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(this, puissance4.grillePleine(), Toast.LENGTH_SHORT).show();
+                }
+            }
+            else if(GestionnaireJoueurs.avoirInstance().avoirJoueurActif().avoirEstIA())
+            {
+                int positionIA = puissance4.jouerIA();
+                if (GestionnaireJoueurs.avoirInstance().avoirJoueurActif() == GestionnaireJoueurs.avoirInstance().avoirJoueurAvecNomCourt('r')) {
+                    mThumbIds[positionIA] = R.drawable.bleu;
+                } else if (GestionnaireJoueurs.avoirInstance().avoirJoueurActif() == GestionnaireJoueurs.avoirInstance().avoirJoueurAvecNomCourt('b')) {
+                    mThumbIds[positionIA] = R.drawable.rouge;
+                }
+
+                adapteur.notifyDataSetChanged();
+                gv.setAdapter(adapteur);
+
+
+                if (puissance4.partieTerminée) {
+                    if (puissance4.aGagne) {
+                        Toast.makeText(this, puissance4.aGagné(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(this, puissance4.grillePleine(), Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         }

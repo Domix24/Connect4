@@ -73,4 +73,9 @@ public class GestionnaireJoueurs {
         }
         return null;
     }
+
+    public void viderListe()
+    {
+        joueurs.clear();
+    }
 }

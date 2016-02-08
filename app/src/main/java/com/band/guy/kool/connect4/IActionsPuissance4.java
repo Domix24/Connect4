@@ -8,4 +8,5 @@ package com.band.guy.kool.connect4;/*
 public interface IActionsPuissance4 {
     public Joueur avoirJoueur(int ligne, int colonne);
     public int jouer(int colonne);
+    public int jouerIA();
 }

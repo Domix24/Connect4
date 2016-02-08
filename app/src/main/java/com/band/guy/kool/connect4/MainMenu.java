@@ -20,18 +20,20 @@ public class MainMenu extends Activity {
         if(v.getId() == R.id.btnLocal)
         {
             Intent intent = new Intent(this,interfaceJeu.class);
+            intent.putExtra("modeJeu","normal");
             startActivity(intent);
         }
         else if(v.getId() == R.id.btnHote)
         {
-            Toast.makeText(MainMenu.this,
-                    "Mik est gay!", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this,interfaceJeu.class);
+            intent.putExtra("modeJeu","vsAI");
+            startActivity(intent);
         }
         else if(v.getId() == R.id.btnRejoindre)
         {
-
-            Toast.makeText(MainMenu.this,
-                    "Max est gay!", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this,interfaceJeu.class);
+            intent.putExtra("modeJeu","antiGravite");
+            startActivity(intent);
         }
 
     }

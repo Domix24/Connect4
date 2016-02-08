@@ -24,6 +24,19 @@ public class JeuGravité extends Jeu implements IActionsPuissance4 {
         ia = new IntelligenceArtificielle(nombreColonnes,nombreLignes);
 
     }
+    @Override
+    public int jouerIA()
+    {
+        Joueur dernierJoueur = GestionnaireJoueurs.avoirInstance().avoirJoueurActif();
+        Point position = ia.jouer(cases, dernierJoueur);
+        this.modifierCase(position.x,position.y, GestionnaireJoueurs.avoirInstance().avoirJoueurActif());
+        this.nombreEssais++;
+        GestionnaireJoueurs.avoirInstance().prochainJoueur();
+        return  position.x*7+position.y;
+
+
+
+    }
 
     @Override
     public int jouer(int colonne) {
@@ -50,15 +63,11 @@ public class JeuGravité extends Jeu implements IActionsPuissance4 {
 
         }
         else {
-            Joueur dernierJoueur = GestionnaireJoueurs.avoirInstance().avoirJoueurActif();
-            
-            GestionnaireJoueurs.avoirInstance().prochainJoueur();
-            
-            if(GestionnaireJoueurs.avoirInstance().avoirJoueurActif().avoirEstIA()) {
-                Point position = ia.jouer(cases, dernierJoueur);
-                return jouer(position.y);
 
-            }
+
+
+            GestionnaireJoueurs.avoirInstance().prochainJoueur();
+
 
             this.évènementsJeu.auTourDe();
         }
