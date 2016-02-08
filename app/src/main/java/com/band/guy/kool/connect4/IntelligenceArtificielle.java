@@ -13,7 +13,7 @@ import com.band.guy.kool.connect4.Joueur;
 import java.util.Random;
 
 /**
- *
+ *Classe qui gère l'intelligences artificielle
  * @author Christophe
  */
 public class IntelligenceArtificielle {
@@ -23,11 +23,22 @@ public class IntelligenceArtificielle {
     int nombrecolonnes;
     int nombrelignes;
 
+    /**
+     * Constructeur de la classe
+     * @param nombrecolonnes nombre de colonnes
+     * @param nombrelignes nombre de lignes
+     */
     public IntelligenceArtificielle(int nombrecolonnes, int nombrelignes) {
         this.nombrecolonnes = nombrecolonnes;
         this.nombrelignes = nombrelignes;
     }
-    
+
+    /**
+     * Methode qui fais joueur le IA
+     * @param cases
+     * @param dernierJoueur
+     * @return position
+     */
     public Point jouer(char[][] cases, Joueur dernierJoueur) {
         this.cases = cases;
         Point p;
@@ -53,6 +64,11 @@ public class IntelligenceArtificielle {
         return p;
     }
 
+    /**
+     * Verifie si le joueur peut gagner
+     * @param position
+     * @return
+     */
     private Point vérifierHorizontal(Joueur position) {
         int compteur;
         for (int j = nombrelignes - 1; j >= 0; j--) {
@@ -86,7 +102,11 @@ public class IntelligenceArtificielle {
         }
         return new Point(-1, -1);
     }
-
+    /**
+     * Verifie si le joueur peut gagner
+     * @param position
+     * @return
+     */
     private Point vérifierVertical(Joueur position) {
         int compteur;
         for (int i = 0; i < nombrecolonnes - 1; i++) {
@@ -109,6 +129,10 @@ public class IntelligenceArtificielle {
         return new Point(-1, -1);
     }
 
+    /**
+     * Joue a un endroit aléatoire
+     * @return
+     */
     private Point jouerAléatoirement() {
         int ligne = 0;
         int colonne = 0;

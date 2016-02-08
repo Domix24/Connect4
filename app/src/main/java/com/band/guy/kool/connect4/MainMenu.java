@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+/**
+ * Classe qui gère l'interface du menu principal
+ */
 public class MainMenu extends Activity {
 
     @Override
@@ -16,6 +19,10 @@ public class MainMenu extends Activity {
 
     }
 
+    /**
+     * Méthode qui gère l'évènement on click
+     * @param v view
+     */
     public void OnClick(View v){
         if(v.getId() == R.id.btnLocal)
         {

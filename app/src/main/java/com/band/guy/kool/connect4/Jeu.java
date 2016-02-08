@@ -5,7 +5,7 @@ package com.band.guy.kool.connect4;/*
  */
 
 /**
- *
+ * Classe abstraite qui définie les mode de jeu
  * @author Dominic
  */
 public abstract class Jeu implements IActionsPuissance4 {
@@ -18,6 +18,12 @@ public abstract class Jeu implements IActionsPuissance4 {
 
     IÉvènementsPuissance4 évènementsJeu;
 
+    /**
+     * Constructeur de la classe
+     * @param évènementsJeu
+     * @param nombreLignes
+     * @param nombreColonnes
+     */
     public Jeu(IÉvènementsPuissance4 évènementsJeu, int nombreLignes, int nombreColonnes) {
         this.évènementsJeu = évènementsJeu;
 
@@ -44,6 +50,12 @@ public abstract class Jeu implements IActionsPuissance4 {
         return null;
     }
 
+    /**
+     * Va placer la position jouer dans l array
+     * @param ligne position
+     * @param colonne position
+     * @param joueur joueur qui joue
+     */
     protected void modifierCase(int ligne, int colonne, Joueur joueur) {
         if (ligne >= 0 && ligne < this.nombreLignes && colonne >= 0 && colonne < this.nombreColonnes) {
             cases[ligne][colonne] = joueur.avoirNomCourt();

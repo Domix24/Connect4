@@ -6,7 +6,7 @@ package com.band.guy.kool.connect4;/*
 
 
 /**
- *
+ * Interface qui implemente les évènements
  * @author Dominic
  */
 public interface IÉvènementsPuissance4 {

@@ -4,7 +4,9 @@ package com.band.guy.kool.connect4;/*
  * and open the template in the editor.
  */
 
-
+/**
+ * Interface qui implemente les actions
+ */
 public interface IActionsPuissance4 {
     public Joueur avoirJoueur(int ligne, int colonne);
     public int jouer(int colonne);

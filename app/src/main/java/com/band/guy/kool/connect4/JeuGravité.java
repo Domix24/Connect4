@@ -9,14 +9,19 @@ import android.graphics.Point;
 
 
 /**
- *
+ * Classe qui gère le mode de jeu normal
  * @author Dominic
  */
 public class JeuGravité extends Jeu implements IActionsPuissance4 {
     
     IntelligenceArtificielle ia;
 
-    
+    /**
+     * Constructeur de la classe
+     * @param évènementsJeu <--
+     * @param nombreLignes <--
+     * @param nombreColonnes <--
+     */
     public JeuGravité(IÉvènementsPuissance4 évènementsJeu, int nombreLignes, int nombreColonnes) {
         super(évènementsJeu, nombreLignes, nombreColonnes);
         
@@ -73,7 +78,12 @@ public class JeuGravité extends Jeu implements IActionsPuissance4 {
         }
         return  ligne;
     }
-    
+
+    /**
+     * Verifie si le joueur a gagné
+     * @param colonne
+     * @return
+     */
     private boolean vérifierVictoireVerticale(int colonne) {
         int compteur = 0;
         Joueur derniereCase = null;
@@ -90,7 +100,11 @@ public class JeuGravité extends Jeu implements IActionsPuissance4 {
 
         return compteur == 4;
     }
-    
+    /**
+     * Verifie si le joueur a gagné
+     * @param colonne
+     * @return
+     */
     private boolean vérifierVictoireHorizontale(int ligne) {
         int compteur = 0;
         Joueur derniereCase = null;
@@ -107,7 +121,11 @@ public class JeuGravité extends Jeu implements IActionsPuissance4 {
 
         return compteur == 4;
     }
-    
+    /**
+     * Verifie si le joueur a gagné
+     * @param colonne
+     * @return
+     */
     private boolean vérifierVictoireDiagonale(int ligne, int colonne) {
         int compteur1 = 0;
         int compteur2 = 0;

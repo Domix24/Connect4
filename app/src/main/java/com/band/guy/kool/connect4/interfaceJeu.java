@@ -11,7 +11,7 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-/**
+/**Classe qui gère l'ìnterface du jeu
  * Created by Michael on 2/5/2016.
  */
 public class interfaceJeu extends Activity {
@@ -79,6 +79,10 @@ public class interfaceJeu extends Activity {
 
     }
 
+    /**
+     * Méthode qui gère quand le joueur joue
+     * @param v vue
+     */
     public void jouer(View v)
     {
         if(!puissance4.partieTerminée) {
@@ -135,9 +139,16 @@ public class interfaceJeu extends Activity {
         }
     }
 
+    /**
+     * Classe interne pour grid view personaliser
+     */
         public class MonAdaptateur extends BaseAdapter {
-            private Context mContext;
+        private Context mContext;
 
+        /**
+         * Constructeur de la classe
+         * @param c
+         */
             public MonAdaptateur(Context c) {
                 mContext = c;
             }
