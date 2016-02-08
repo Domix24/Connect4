@@ -36,7 +36,24 @@ public class JeuGravité extends Jeu implements IActionsPuissance4 {
         Point position = ia.jouer(cases, dernierJoueur);
         this.modifierCase(position.x,position.y, GestionnaireJoueurs.avoirInstance().avoirJoueurActif());
         this.nombreEssais++;
-        GestionnaireJoueurs.avoirInstance().prochainJoueur();
+        if(this.estGagnant(position.x, position.y)) {
+            GestionnaireJoueurs.avoirInstance().prochainJoueur();
+            this.évènementsJeu.aGagné();
+
+        }
+        else if(this.estPartieNulle()) {
+            this.évènementsJeu.grillePleine();
+
+        }
+        else {
+
+
+
+            GestionnaireJoueurs.avoirInstance().prochainJoueur();
+
+
+            this.évènementsJeu.auTourDe();
+        }
         return  position.x*7+position.y;
 
 
