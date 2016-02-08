@@ -58,7 +58,7 @@ public abstract class Jeu implements IActionsPuissance4 {
      */
     protected void modifierCase(int ligne, int colonne, Joueur joueur) {
         if (ligne >= 0 && ligne < this.nombreLignes && colonne >= 0 && colonne < this.nombreColonnes) {
-            cases[ligne][colonne] = joueur.avoirNomCourt();
+            cases[ligne][colonne] = joueur == null ? Joueur.VIDE.avoirNomCourt() :  joueur.avoirNomCourt();
         }
     }
 

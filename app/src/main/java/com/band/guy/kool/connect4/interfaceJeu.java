@@ -95,6 +95,18 @@ public class interfaceJeu extends Activity {
                 Toast.makeText(this, texte, Toast.LENGTH_SHORT).show();
                 return;
             }
+
+            if(puissance4.actionsJeu instanceof JeuAntiGravité) {
+
+                for(int k = 41 - 6 + position; k >= 7; k -= 7 ) {
+                    mThumbIds[k] = mThumbIds[k - 7];
+                }
+            }
+
+            if(puissance4.partieTerminée && puissance4.actionsJeu instanceof JeuAntiGravité && puissance4.aGagne) {
+                GestionnaireJoueurs.avoirInstance().prochainJoueur();
+            }
+
             if (GestionnaireJoueurs.avoirInstance().avoirJoueurActif() == GestionnaireJoueurs.avoirInstance().avoirJoueurAvecNomCourt('r')) {
                 mThumbIds[position] = R.drawable.bleu;
             } else if (GestionnaireJoueurs.avoirInstance().avoirJoueurActif() == GestionnaireJoueurs.avoirInstance().avoirJoueurAvecNomCourt('b')) {
